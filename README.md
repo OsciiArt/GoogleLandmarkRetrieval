@@ -12,6 +12,7 @@ Description is available at [here]()
 - download image data from [here](https://www.kaggle.com/c/landmark-retrieval-challenge/discussion/56194)
 and place them in `input/index/` and `input/query`  
 - place `sample_submission.csv` in `input/`
+
 ### How to use
 - run `extract_feature_vgg.py`  
   extract feature at dir `output/`  
@@ -22,4 +23,7 @@ and place them in `input/index/` and `input/query`
   you can change a model to extract features by editing line 8  
 - run `train_rotnet.py`  
   train [RotNet](https://openreview.net/forum?id=S1v4N2l0-)
+- run `extract_feature_rotnet.py`  
+  extract feature at dir `output/`  
+  you can change a layer to extract features by change line 78 
   

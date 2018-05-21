@@ -64,9 +64,6 @@ print(len(index_list))
 query_path = "input/query/"
 index_list += sorted(glob.glob(query_path + "*")) # 114943
 index_list = pd.DataFrame(index_list, columns=['path'])
-print(len(index_list))
-print(index_list[:5])
-print(index_list[-5:])
 
 model = get_model(1,128, feature_layer)
 
