@@ -3,17 +3,20 @@ import numpy as np
 import pandas as pd
 
 # feature_layer = "block3_conv3"
-# feature_layer = "block4_conv3"
-feature_layer = "block5_conv3"
+feature_layer = "block4_conv3"
+# feature_layer = "block5_conv3"
 model_name = "vgg" # or rotnet
 
 d = 512                           # dimension
-nb = 1091756                      # database size
-nq = 114943                       # nb of queries
-x_base = np.load("output/{}_feature_{}.npy".format(model_name, feature_layer))
-xb = x_base[:nb]
-xq = x_base[nb:]
-
+# nb = 1091756                      # database size
+# nq = 114943                       # nb of queries
+# x_base = np.load("output/{}_feature_{}.npy".format(model_name, feature_layer))
+# x_base = np.load("additional/vgg_pred_block4rgb_Retry.npy".format(model_name, feature_layer))
+# x_base = np.load("output/vgg_feature_{}_retry.npy".format(feature_layer))
+xb = np.load("output/vgg_feature_{}_index.npy".format(feature_layer))
+xq = np.load("output/vgg_feature_{}_query.npy".format(feature_layer))
+print(xb.shape)
+print(xq.shape)
 import faiss
 res = faiss.StandardGpuResources()  # use a single GPU
 
@@ -54,4 +57,5 @@ sub2 = pd.read_csv("input/sample_submission.csv")
 sub2['images'] = ""
 sub = pd.concat([sub, sub2])
 sub = sub.drop_duplicates(['id'])
-sub.to_csv("output/sub_{}_{}.csv".format(model_name, feature_layer), index=None)
+# sub.to_csv("output/sub_{}_{}.csv".format(model_name, feature_layer), index=None)
+sub.to_csv("output/sub_vgg_pred_block4rgb_retry2.csv".format(model_name, feature_layer), index=None)

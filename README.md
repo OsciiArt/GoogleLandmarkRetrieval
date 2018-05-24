@@ -16,7 +16,7 @@ and place them in `input/index/` and `input/query`
 ### How to use
 - run `extract_feature_vgg.py`  
   extract feature at dir `output/`  
-  you can change a layer to extract features by change line 59  
+  you can change a layer to extract features by change line 57   
 - run `output_submission.py`  
   calcurate distances between features and output submission file at dir `output/`  
   you can change a layer to extract features by editing line 7  

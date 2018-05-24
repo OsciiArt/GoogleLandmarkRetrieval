@@ -3,9 +3,8 @@ import pandas as pd
 import time, os, glob
 import cv2
 
-
 from keras.applications.vgg16 import VGG16
-from keras.optimizers import Adam
+from keras.optimizers import SGD, Adam
 from keras.layers import GlobalAveragePooling2D
 from keras import Model
 from keras.applications.imagenet_utils import preprocess_input
@@ -17,7 +16,6 @@ def get_model(num_class, input_size, feature_layer):
     x = GlobalAveragePooling2D()(x)
 
     model = Model(inputs=base_model.input, outputs=x)
-
     optimizer = Adam(lr=0.0001)
     model.compile(loss='categorical_crossentropy',
                   optimizer=optimizer,
@@ -25,7 +23,7 @@ def get_model(num_class, input_size, feature_layer):
     return model
 
 
-def test_generator(x_train, batch_size, shuffle=False):
+def test_generator(x_train, batch_size, input_size, shuffle=False):
     batch_index = 0
     n = x_train.shape[0]
     while 1:
@@ -60,20 +58,21 @@ feature_layer = "block5_conv3"
 
 index_path = "input/index/"
 index_list = sorted(glob.glob(index_path + "*")) # 1091756
-print(len(index_list))
+len_index = len(index_list)
 query_path = "input/query/"
 index_list += sorted(glob.glob(query_path + "*")) # 114943
 index_list = pd.DataFrame(index_list, columns=['path'])
+input_size = 128
 
-model = get_model(1,128, feature_layer)
+model = get_model(1,input_size, feature_layer)
 
 batch_size = 128
-input_size = 128
 gen_test = test_generator(index_list, batch_size, input_size)
 feature = model.predict_generator(generator=gen_test,
                                      steps=np.ceil(index_list.shape[0] / batch_size),
                                      verbose=1)
-print("feature.shape", feature.shape)
-np.save("output/vgg_feature_{}.npy".format(feature_layer), feature)
+
+np.save("output/vgg_feature_{}_index.npy".format(feature_layer), feature[:len_index])
+np.save("output/vgg_feature_{}_query.npy".format(feature_layer), feature[len_index:])
 
 
