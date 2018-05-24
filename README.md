@@ -2,7 +2,7 @@
 
 This is my solution for [Google Landmark Retrieval Challenge](https://www.kaggle.com/c/landmark-retrieval-challenge/)
 
-Description is available at [here]()
+Description is available at [here](https://www.kaggle.com/c/landmark-retrieval-challenge/discussion/57245)
 
 ### Requirement
 - python
